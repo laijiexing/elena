@@ -22,6 +22,11 @@ spring:
         max-idle: 8
         min-idle: 0
     timeout: 1000ms
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: 'http://localhost:8001/rsa/publicKey' #配置RSA的公钥访问地址
 
 server:
   port: 8866
@@ -33,17 +38,11 @@ eureka:
     refresh:
       enable: false
 
-security:
-  oauth2:
-    client:
-      client-id: gateway-client
-      client-secret: elena-gateway-secret-1996
-      user-authorization-uri: http://localhost:8001/oauth/token
-    resource:
-      id: gateway-client
-      user-info-uri: user-info
-    authorization:
-      check-token-access: http://localhost:8001/oauth/check_token
+secure:
+  ignore:
+    urls: #配置白名单路径
+      - "/actuator/**"
+      - "/auth/oauth/token"
 
 service:
   url:
