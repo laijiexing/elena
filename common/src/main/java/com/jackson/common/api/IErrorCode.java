@@ -1,4 +1,4 @@
-package com.jackson.gateway.api;
+package com.jackson.common.api;
 
 /**
  * 封装API的错误码

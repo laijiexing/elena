@@ -1,4 +1,4 @@
-package com.jackson.gateway.api;
+package com.jackson.common.api;
 
 /**
  * 枚举了一些常用API操作码

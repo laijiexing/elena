@@ -1,4 +1,4 @@
-package com.jackson.gateway.api;
+package com.jackson.common.api;
 
 /**
  * 通用返回对象

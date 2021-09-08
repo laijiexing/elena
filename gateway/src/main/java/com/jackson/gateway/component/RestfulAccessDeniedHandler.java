@@ -1,7 +1,7 @@
 package com.jackson.gateway.component;
 
 import cn.hutool.json.JSONUtil;
-import com.jackson.gateway.api.CommonResult;
+import com.jackson.common.api.CommonResult;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
