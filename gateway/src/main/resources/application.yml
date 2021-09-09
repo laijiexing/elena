@@ -38,9 +38,10 @@ eureka:
     refresh:
       enable: false
 
+#配置白名单路径
 secure:
   ignore:
-    urls: #配置白名单路径
+    urls:
       - "/actuator/**"
       - "/auth/oauth/token"
 
