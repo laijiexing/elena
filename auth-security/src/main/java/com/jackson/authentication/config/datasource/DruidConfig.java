@@ -35,7 +35,7 @@ public class DruidConfig {
         // 白名单
         srb.addInitParameter("allow", "127.0.0.1");
         // 黑名单
-        srb.addInitParameter("deny", "192.168.31.253");
+//        srb.addInitParameter("deny", "192.168.31.253");
         // 用户名
         srb.addInitParameter("loginUsername", "root");
         // 密码

@@ -44,6 +44,8 @@ public class Oauth2Config extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private MyUserDetailsService userDetailsService;
 
+    @Autowired
+    private KeyPair keyPair;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -54,6 +56,9 @@ public class Oauth2Config extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    private JwtAccessTokenConverter accessTokenConverter;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -74,26 +79,13 @@ public class Oauth2Config extends AuthorizationServerConfigurerAdapter {
         TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
         List<TokenEnhancer> delegates = new ArrayList<>();
         delegates.add(jwtTokenEnhancer);
-        delegates.add(accessTokenConverter());
+        delegates.add(accessTokenConverter);
         //配置JWT的内容增强器
         enhancerChain.setTokenEnhancers(delegates);
         endpoints.authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService) //配置加载用户信息的服务
-                .accessTokenConverter(accessTokenConverter())
+                .accessTokenConverter(accessTokenConverter)
                 .tokenEnhancer(enhancerChain);
-    }
-
-    public JwtAccessTokenConverter accessTokenConverter() {
-        JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-        jwtAccessTokenConverter.setKeyPair(keyPair());
-        return jwtAccessTokenConverter;
-    }
-
-    @Bean(name = "myKeyPair")
-    public KeyPair keyPair() {
-        //从classpath下的证书中获取秘钥对
-        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt/jwt.jks"), "123456".toCharArray());
-        return keyStoreKeyFactory.getKeyPair("jwt", "123456".toCharArray());
     }
 
 }
