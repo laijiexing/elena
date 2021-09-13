@@ -1,9 +1,11 @@
 package com.jackson.gateway.filters;
 
 import cn.hutool.core.util.StrUtil;
+import com.jackson.gateway.config.BaseAuthorizationConfig;
 import com.nimbusds.jose.JWSObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -23,11 +25,14 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
     private static Logger LOGGER = LoggerFactory.getLogger(AuthGlobalFilter.class);
 
+    @Autowired
+    private BaseAuthorizationConfig baseAuthorizationConfig;
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String token = exchange.getRequest().getHeaders().getFirst("Authorization");
         if (StrUtil.isEmpty(token)) {
-            ServerHttpRequest request = exchange.getRequest().mutate().header("Authorization", "Basic Z2F0ZXdheS1jbGllbnQ6ZWxlbmEtZ2F0ZXdheS1zZWNyZXQtMTk5Ng==").build();
+            ServerHttpRequest request = exchange.getRequest().mutate().header("Authorization", baseAuthorizationConfig.getBaseAuthorization()).build();
             exchange = exchange.mutate().request(request).build();
             return chain.filter(exchange);
         }

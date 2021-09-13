@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
-@SpringBootTest
+@SpringBootTest(classes = {ElenaAuthApplication.class})
 class ElenaAuthApplicationTests {
 
     @Autowired
@@ -28,7 +28,7 @@ class ElenaAuthApplicationTests {
 
     @Test
     void encode() {
-        String encode = passwordEncoder.encode("gateway-client:elena-gateway-secret-1996");
+        String encode = passwordEncoder.encode("elena-gateway-server");
         System.out.println(encode);
     }
 
